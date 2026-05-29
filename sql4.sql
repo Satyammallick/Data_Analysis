@@ -86,3 +86,33 @@ SET grade="A"
 WHERE  grade="c" ; 
 
 SELECT *FROM student;
+
+ALTER TABLE student
+ADD COLUMN age INT NOT  NULL DEFAULT 18;
+
+ALTER TABLE student
+DROP COLUMN age;
+ 
+ 
+ALTER TABLE children
+RENAME TO student;
+
+
+ALTER TABLE student
+CHANGE COLUMN roll_no id ;
+
+
+
+ALTER TABLE student
+ CHANGE name full_name VARCHAR(10);
+
+DELETE FROM student
+WHERE marks<95;
+
+SET SQL_SAFE_UPDATES = 1;
+  
+  
+  SELECT *FROM student;
+  
+ALTER TABLE student
+DROP COLUMN grade;
