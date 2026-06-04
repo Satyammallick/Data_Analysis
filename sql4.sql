@@ -10,6 +10,9 @@ CREATE DATABASE school ;
  city VARCHAR(10)
  );
  
+ 
+ 
+ 
  CREATE TABLE dept(
  id INT PRIMARY KEY,
  name VARCHAR(50)
@@ -116,3 +119,87 @@ SET SQL_SAFE_UPDATES = 1;
   
 ALTER TABLE student
 DROP COLUMN grade;
+
+
+#sql subquery
+--Eg:-1
+
+#1st step:-
+SELECT AVG(marks)
+FROM student;
+
+#2nd step:-
+SELECT name,marks
+FROM student
+WHERE marks > 93.6 ; 
+
+#Combined step
+
+SELECT name,marks
+FROM student
+WHERE marks > 
+(SELECT AVG(marks)FROM student);
+
+
+
+--Eg:-2
+
+--1st step
+
+SELECT roll_no
+FROM student
+WHERE roll_no % 2=0;
+
+
+--2nd step
+
+SELECT name
+FROM student 
+WHERE roll_no IN(2,4);
+
+
+--combined step
+
+SELECT name,roll_no
+FROM student 
+WHERE roll_no IN
+(
+    SELECT roll_no
+	FROM student
+	WHERE roll_no % 2=0
+    );
+    
+    --Eg:-3
+    
+    --1st step
+    SELECT *
+    FROM student
+    WHERE city="Delhi";
+    
+    --2nd step
+    SELECT MAX(marks)
+    FROM student
+    WHERE city="Delhi";
+    
+    --combined step 
+    
+	SELECT MAX(marks)
+    FROM(SELECT *
+    FROM student
+    WHERE city="Delhi") AS temp;
+ 
+--Simplified version
+
+SELECT MAX(marks)
+FROM student
+WHERE city="Delhi";
+
+SELECT(SELECT MAX(marks) FROM student),name
+FROM student;
+
+CREATE VIEW v1 AS 
+SELECT roll_no,name
+FROM student;
+
+SELECT *FROM v1;
+
