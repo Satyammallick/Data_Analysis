@@ -29,9 +29,15 @@ VALUES (1,"Sales",25000),
        
        
        SELECT *,
-       AVG(salary) OVER(PARTITION BY dept) AS dept_avg_sal
+       AVG(salary) OVER() AS avg_sal
        FROM employee;
-       
+        
+        
+        SELECT id,dept,salary,
+        MIN(salary) OVER() AS min_sal,
+        MAX(salary) OVER() AS max_sal,
+        AVG(salary) OVER() AS avg_sal
+        FROM employee;
        
        
        
@@ -39,6 +45,28 @@ VALUES (1,"Sales",25000),
        #WINDOW_FUNCTIONS
        
        SELECT id,dept,salary,
+       AVG(salary) OVER() AS company_avg_sal,
        AVG(salary) OVER(PARTITION BY dept) AS dept_avg_sal 
        FROM employee;
+       
+        SELECT id,dept,salary,
+       SUM(salary) OVER() AS total_payout,
+       SUM(salary) OVER(PARTITION BY dept) AS dept_payout
+       FROM employee;
+       
+       
+       SELECT dept,id
+       FROM employee
+       GROUP BY dept;
+       
+       
+       
+       
+       
+          SELECT id,dept,salary,
+		COUNT(dept) OVER(PARTITION BY dept) AS dept_emp_count
+        FROM employee;
+       
+       
+       
        
