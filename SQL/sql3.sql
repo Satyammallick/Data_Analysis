@@ -18,7 +18,7 @@ VALUES (1,"Sales",25000),
        SELECT *FROM employee;
        
         
-    **********#GROUP_BY
+        #GROUP_BY
         
        SELECT dept,AVG(salary) 
        FROM employee
@@ -42,7 +42,7 @@ VALUES (1,"Sales",25000),
        
        
        
-    ************#WINDOW_FUNCTIONS---Over (Partition by)
+       #WINDOW_FUNCTIONS
        
        SELECT id,dept,salary,
        AVG(salary) OVER() AS company_avg_sal,
@@ -61,40 +61,12 @@ VALUES (1,"Sales",25000),
        
        
        
+       
+       
           SELECT id,dept,salary,
 		COUNT(dept) OVER(PARTITION BY dept) AS dept_emp_count
         FROM employee;
-        
-        
-        **********#Over (Partition by Order By)
-        
-        
-          SELECT id,dept,salary,
-          SUM(salary) OVER() AS total_payout,
-          SUM(salary) OVER(PARTITION BY dept) AS total_dept_payout,
-       SUM(salary) OVER(PARTITION BY dept ORDER BY salary DESC) AS rolling_dept_payout,
-		SUM(salary) OVER(PARTITION BY dept ORDER BY salary) AS rolling_dept_payout1
-       FROM employee;
-        
-        
-        SELECT id,dept,salary,
-        MIN(salary) OVER() AS min_sal,
-        MIN(salary) OVER(PARTITION BY dept) AS dept_min_sal,
-        MIN(salary) OVER(PARTITION BY dept ORDER BY salary DESC) as rolling_min
-
-        FROM employee;
-        
-        
-       
-       SELECT *,
-               MIN(salary) OVER(PARTITION BY dept ORDER BY salary ) as rolling_min1
-               FROM employee;
        
        
        
-       ***********#Rank() OVER()
-       
-       
-       
-	
        
