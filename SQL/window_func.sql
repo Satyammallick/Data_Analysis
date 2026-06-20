@@ -9,11 +9,19 @@ dept VARCHAR(50),
 salary INT
 );
 
+
+
 INSERT INTO employee 
 VALUES (1,"Sales",25000),
 	   (2,"HR",30000),
        (3,"HR",40000),
-       (4,"Sales",15000);
+       (4,"Sales",15000),
+       (5,"Finance",25000),
+	   (6,"Finance",20000),
+       (7,"HR",30000),
+       (8,"Sales",35000),
+       (9,"Finance",40000);
+       
        
        SELECT *FROM employee;
        
@@ -91,3 +99,29 @@ VALUES (1,"Sales",25000),
                FROM employee;
        
        
+       
+	**********# Rank() Over_clause
+    
+        SELECT id,dept,salary,
+		RANK() OVER(ORDER BY salary DESC) AS overall_sal_rank,
+        RANK() OVER(PARTITION BY dept ORDER BY salary DESC) AS dept_sal_rank
+        FROM employee;
+        
+        
+        
+	**********# DENSE RANK() AND ROW_NUMBER()
+    
+      SELECT id,dept,salary,
+      ROW_NUMBER() OVER( ORDER BY salary DESC) AS row_num,
+		RANK() OVER(ORDER BY salary DESC) AS overall_sal_rank,
+        RANK() OVER(PARTITION BY dept ORDER BY salary DESC) AS dept_sal_rank,
+       DENSE_RANK() OVER(ORDER BY salary DESC) AS overall_dense_rank,
+        ROW_NUMBER() OVER(PARTITION BY dept ORDER BY salary DESC) AS dept_row_num
+        FROM employee
+        ORDER BY overall_sal_rank;
+        
+        
+        
+        
+        
+	
