@@ -18,7 +18,7 @@ VALUES (1,"Sales",25000),
        SELECT *FROM employee;
        
         
-        #GROUP_BY
+    **********#GROUP_BY
         
        SELECT dept,AVG(salary) 
        FROM employee
@@ -38,35 +38,22 @@ VALUES (1,"Sales",25000),
         MAX(salary) OVER() AS max_sal,
         AVG(salary) OVER() AS avg_sal
         FROM employee;
+        
+        
+        
+        *******COMMON TABLE EXPRESSIONS (CTE)----------
+        
+       
+       SELECT * FROM employee;
+       
+       *****WITH_CLAUSE()
+       
+       WITH average_salary(avg_sal) AS
+      ( SELECT ROUND(AVG(salary),0) FROM employee)
+      SELECT *
+      FROM employee e , average_salary a
+      WHERE salary > a.avg_sal ;
        
        
-       
-       
-       #WINDOW_FUNCTIONS
-       
-       SELECT id,dept,salary,
-       AVG(salary) OVER() AS company_avg_sal,
-       AVG(salary) OVER(PARTITION BY dept) AS dept_avg_sal 
-       FROM employee;
-       
-        SELECT id,dept,salary,
-       SUM(salary) OVER() AS total_payout,
-       SUM(salary) OVER(PARTITION BY dept) AS dept_payout
-       FROM employee;
-       
-       
-       SELECT dept,id
-       FROM employee
-       GROUP BY dept;
-       
-       
-       
-       
-       
-          SELECT id,dept,salary,
-		COUNT(dept) OVER(PARTITION BY dept) AS dept_emp_count
-        FROM employee;
-       
-       
-       
+    
        
