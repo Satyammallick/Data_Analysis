@@ -119,8 +119,45 @@ VALUES (1,"Sales",25000),
         ROW_NUMBER() OVER(PARTITION BY dept ORDER BY salary DESC) AS dept_row_num
         FROM employee
         ORDER BY overall_sal_rank;
+           
+           
+		*******************#NTILE()
+        
+        SELECT id,dept,salary,
+    NTILE(4) OVER(PARTITION BY dept ORDER BY salary DESC) AS dept_salary_quartile,
+	NTILE(4) OVER(ORDER BY salary DESC) AS salary_quartile
+FROM employee;
         
         
+        **************First_Value()
+        
+        SELECT id,dept,salary,
+    FIRST_VALUE(id) OVER(PARTITION BY dept ORDER BY salary DESC) as highest_paid_dept,
+    FIRST_VALUE(id) OVER(ORDER BY salary DESC) as highest_paid_overall
+FROM employee;
+        
+        
+        **************LEAD() & LAG()
+        
+SELECT 
+    id, 
+    dept, 
+    salary,
+    LAG(salary) OVER(ORDER BY salary DESC) AS previous_row_sal,
+    LEAD(salary) OVER(ORDER BY salary DESC) AS next_row_sal,
+    salary - LAG(salary) OVER(ORDER BY salary DESC) as salary_diff,
+       salary - LEAD(salary) OVER(ORDER BY salary DESC) as salary_diff1
+FROM employee;
+
+
+ 
+SELECT 
+    id, 
+    dept, 
+    salary,
+    salary - LEAD(salary) OVER(PARTITION BY dept ORDER BY salary DESC) as dept_salary_diff,
+    salary - LAG(salary) OVER(PARTITION BY dept ORDER BY salary DESC) as dept_salary_diff1
+FROM employee;
         
         
         
