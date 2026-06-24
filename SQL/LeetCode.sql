@@ -165,11 +165,45 @@ ON p.product_id= s.product_id
 GROUP BY s.product_id
 HAVING MIN(sale_date) >= '2019-01-01' AND MAX(sale_date) <= '2019-03-31';
 
-22.--------
+22.--------Write a solution to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively.
+ 
+SELECT activity_date as day , COUNT(DISTINCT(user_id as active_user))
+FROM activity
+WHERE activity_date BETWEEN '2019-06-27' AND '2019-07-27'
+GROUP BY activity_date ;
+
+23.---------Write a solution to find all the authors that viewed at least one of their own articles.
+
+SELECT DISTINCT(author_id) AS id
+FROM views
+WHERE author_id = viewer_id
+ORDER BY author_id ASC;
 
 
+24.---------Second Highest Salary
 
+ SELECT
+ (
+SELECT DISTINCT(salary) 
+FROM employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1 )
+AS SecondHighestSalary ;
 
+25.--------------Nth Highest Salary
+
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+SET N=N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+   
+    SELECT DISTINCT(salary) 
+FROM employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET N 
+  );
+END
 
 
 
