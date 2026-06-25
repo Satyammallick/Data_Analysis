@@ -205,11 +205,46 @@ LIMIT 1 OFFSET N
   );
 END
 
+ 
+--syntax:-
 
+CREATE FUNCTION function_name(parameter datatype)
+RETURNS return_datatype
+BEGIN
 
+    -- statements
 
+    RETURN (
+        SELECT ...
+    );
 
+END
 
+26.----------Rank Scores---------
+
+SELECT score ,
+DENSE_RANK() OVER(ORDER BY score DESC) as 'rank'
+FROM Scores 
+ORDER BY score DESC;
+
+27.---------- Consecutive Numbers----------
+
+SELECT DISTINCT num AS ConsecutiveNums
+FROM
+(
+SELECT 
+LAG(id) OVER(ORDER BY id) AS previous_id,
+id,
+LEAD(id) OVER (ORDER BY id) AS next_id,
+LAG(num) OVER(ORDER BY id) AS previous_num,
+num,
+LEAD(num) OVER (ORDER BY id) AS next_num 
+FROM logs
+ ) subquery
+WHERE num = previous_name
+AND num = next_num
+AND next_id - id = 1
+AND id - previous_id = 1 ;
 
 
 
