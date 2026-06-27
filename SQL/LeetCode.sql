@@ -246,27 +246,40 @@ AND num = next_num
 AND next_id - id = 1
 AND id - previous_id = 1 ;
 
-28.-------------Rank Scores--------
 
-SELECT score ,
-DENSE_RANK() OVER(ORDER BY score DESC) as 'rank'
-FROM Scores 
-ORDER BY score DESC;
-
-29.---------Replace Employee ID With The Unique Identifier-----
+28.---------Replace Employee ID With The Unique Identifier-----
 
 SELECT e2.unique_id,name
 FROM Employees e1
 LEFT JOIN EmployeeUNI e2
 ON e1.id=e2.id ;
 
-30.---------Recyclable and Low Fat Products-----
+29.--------Recyclable and Low Fat Products-----
 
 SELECT product_id
 FROM products
 WHERE low_fats = 'Y' 
  AND recyclable ='Y' ;
 
+30.----------Customer Who Visited but Did Not Make Any Transactions-----
+
+SELECT v.customer_id ,COUNT(customer_id) AS count_no_trans
+FROM Visits v
+LEFT JOIN Transactions t
+ON v.visit_id = t.visit_id
+WHERE t.visit_id IS NULL
+GROUP BY customer_id;
+
+31.------------Average Time of Process per Machine---
+
+ 
+SELECT a.machine_id , ROUND(AVG(b.timestamp-a.timestamp) , 3) AS processing_time
+FROM activity a
+JOIN activity b
+ON a.machine_id = b.machine_id
+AND a.process_id = b.process_id
+WHERE a.activity_type = "start" AND b. activity_type ="end"
+GROUP BY machine_id ;
 
 
 
