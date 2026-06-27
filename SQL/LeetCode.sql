@@ -246,10 +246,26 @@ AND num = next_num
 AND next_id - id = 1
 AND id - previous_id = 1 ;
 
+28.-------------Rank Scores--------
 
+SELECT score ,
+DENSE_RANK() OVER(ORDER BY score DESC) as 'rank'
+FROM Scores 
+ORDER BY score DESC;
 
+29.---------Replace Employee ID With The Unique Identifier-----
 
+SELECT e2.unique_id,name
+FROM Employees e1
+LEFT JOIN EmployeeUNI e2
+ON e1.id=e2.id ;
 
+30.---------Recyclable and Low Fat Products-----
+
+SELECT product_id
+FROM products
+WHERE low_fats = 'Y' 
+ AND recyclable ='Y' ;
 
 
 
