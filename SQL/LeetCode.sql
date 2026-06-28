@@ -281,6 +281,25 @@ AND a.process_id = b.process_id
 WHERE a.activity_type = "start" AND b. activity_type ="end"
 GROUP BY machine_id ;
 
+32.-------------Students and Examinations-----------
+
+SELECT st.student_id , st.student_name ,su.subject_name,COUNT(e.student_id) AS attended_exams
+FROM students st
+CROSS JOIN subjects su
+LEFT JOIN examinations e
+ON st.student_id = e.student_id AND su.subject_name = e.subject_name
+GROUP BY st.student_id , st.student_name , su.subject_name
+ORDER BY st.student_id , st.student_name , su.subject_name ;
+
+33.------------Confirmation Rate----------
+
+SELECT s.user_id , ROUND(AVG(IF(c.action='confirmed' , 1 ,0)),2) AS confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c
+ON s.user_id = c.user_id 
+GROUP BY c.user_id ;
+
+
 
 
 
