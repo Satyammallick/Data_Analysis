@@ -299,7 +299,27 @@ LEFT JOIN Confirmations c
 ON s.user_id = c.user_id 
 GROUP BY c.user_id ;
 
+34.----------- Average Selling Price----------
 
+SELECT p.product_id, ROUND(SUM(units * price) / SUM(units),2) AS average_price
+FROM prices p
+LEFT JOIN UnitsSold u
+ON p.product_id = u.product_id 
+WHERE u.purchase_date BETWEEN start_date and end_date
+GROUP BY product_id;
+
+
+35.----------Percentage of Users Attended a Contest-------
+
+SELECT contest_id , ROUND
+(
+    COUNT(contest_id) / (SELECT COUNT(*) FROM users ) * 100 , 2
+) AS percentage
+FROM users u
+LEFT JOIN register r
+ON u.user_id = r.user_id
+GROUP BY contest_id 
+ORDER BY percentage DESC , contest_id ASC;  
 
 
 
